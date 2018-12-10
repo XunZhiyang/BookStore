@@ -1,3 +1,4 @@
+#include "pch.h"
 #include<string>
 #include<fstream>
 #include "user.h"
@@ -23,7 +24,31 @@ User findUser(std::string s) {
 		readString(userData, username, 30);
 		readString(userData, password, 30);
 		userData.read(&level, 1);
-		if (username == s) return User(username, password, level);
+		if (username == s) {
+			userData.close();
+			return User(username, password, level);
+		}
 	}
-	
+	userData.close();
+	throw(std::invalid_argument("NO SUCH USER"));
+}
+
+int count(std::string s) {
+	try {
+		findUser(s);
+	}
+	catch (const std::invalid_argument &msg) {
+		return 0;
+	}
+	return 1;
+}
+
+int addUser(std::string username, std::string password, char level) {
+	if (count(username)) return 0;
+	std::fstream userData("userData");
+	userData.seekp(0, std::ios::end);
+	writeString(userData, username, 30);
+	writeString(userData, password, 30);
+	userData.write(&level, 1);
+	return 1;
 }

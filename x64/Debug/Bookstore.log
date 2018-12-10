@@ -1,15 +1,7 @@
-﻿  blocklist.cpp
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(25): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(199): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(225): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(254): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(265): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(269): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-  main.cpp
-e:\study\programming\bookstore\bookstore\bookstore\main.cpp(18): error C2084: 函数“int main(void)”已有主体
-  e:\study\programming\bookstore\bookstore\bookstore\main.cpp(11): note: 参见“main”的前一个定义
+﻿  main.cpp
   store.cpp
-e:\study\programming\bookstore\bookstore\bookstore\store.cpp(12): fatal error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?
   user.cpp
-e:\study\programming\bookstore\bookstore\bookstore\user.cpp(22): fatal error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?
+e:\study\programming\bookstore\bookstore\bookstore\user.cpp(40): warning C4101: “msg”: 未引用的局部变量
   正在生成代码...
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(28): warning C4715: “Store::load”: 不是所有的控件路径都返回值
+  Bookstore.vcxproj -> E:\study\programming\Bookstore\bookstore\x64\Debug\Bookstore.exe
