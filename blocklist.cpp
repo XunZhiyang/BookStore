@@ -1,31 +1,11 @@
 #include "pch.h"
 #include "blocklist.h"
+#include "opfile.h"
 #include<vector>
 #include<iostream>
 #include<algorithm>
 #include<fstream>
 
-void BlockList::readInt(std::fstream &stream, int &t) {
-	stream.read(reinterpret_cast<char *>(&t), 4);
-	//std::cerr << stream.gcount() << std::endl;
-}
-
-void BlockList::writeInt(std::fstream &stream, int t) {
-	stream.write(reinterpret_cast<char *>(&t), 4);
-}
-
-void BlockList::readString(std::fstream &stream, std::string &s) {
-	char *ss = new char[41];
-	ss[41] = '\0';
-	stream.read(ss, 40);
-	s = ss;
-}
-
-void BlockList::writeString(std::fstream &stream, std::string &s) {
-	int len = s.length();
-	for (int i = len; i < 40; ++i) s += '\0';
-	stream.write(s.c_str(), 40);
-}
 
 BlockList::BlockList(std::string _name) : name(_name) {
 	std::fstream file(name, std::ios::out);
@@ -228,15 +208,19 @@ void BlockList::insert(std::string index, int key) {
 				std::cerr << file.tellp() << std::endl;
 				if (file.tellg() == now) break;
 				file.seekp(-44, std::ios::cur);
-				std::cerr << file.tellp() << std::endl;
-				char s[44];
+				char s[100];
+				for (int i = 0; i < 100; ++i) s[i] = '\0';
 				file.read(s, 44);
+				std::cerr << file.tellp() << std::endl;
 				std::cerr << file.gcount() << std::endl;
 				std::cerr.write(s, 44) << std::endl;
 				file.write(s, 44);
+				std::cerr << file.tellp() << std::endl;
 				std::cerr << file.gcount() << std::endl;
 				file.seekp(-44, std::ios::cur);
+				std::cerr << file.tellp() << std::endl;
 				file.read(s, 44);
+				std::cerr << file.tellp() << std::endl;
 				std::cerr << file.gcount() << std::endl;
 				std::cerr.write(s, 44) << std::endl << std::endl;
 				file.seekp(-88, std::ios::cur);

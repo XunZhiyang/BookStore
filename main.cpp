@@ -7,14 +7,22 @@
 #include <iostream>
 #include "blocklist.h"
 
+
+int main() {
+	class Store;
+	for (;;) {
+		
+	}
+}
+
 int main() {
 	BlockList test = BlockList("hahaha");
 	test.insert("aba", 578237);
 	test.insert("ffq", 155);
-	test.insert("ava", 155);
 	test.insert("aca", 5782370);
 	test.insert("qqiiyyy", 1550);
+	test.insert("aha", 155);
 	test.insert("vfdbf", 34243240);
-	printf("%d\n", test.find("ava")[0]);
+	printf("%d\n", test.find("aha")[0]);
 	return 0;
 }

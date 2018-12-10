@@ -24,6 +24,15 @@
     <ClInclude Include="blocklist.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="标头.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="store.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opfile.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="pch.cpp">
@@ -36,6 +45,15 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="blocklist.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="user.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="store.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="opfile.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>

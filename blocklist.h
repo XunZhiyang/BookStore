@@ -11,13 +11,6 @@ public:
 	std::string name;
 
 	BlockList(std::string _name);
-	void readInt(std::fstream &stream, int &t);
-
-	void readString(std::fstream &stream, std::string &s);
-
-	void writeInt(std::fstream &stream, int t);
-
-	void writeString(std::fstream &stream, std::string &s);
 
 	//void locate(std::ifstream &stream, int thisblock);
 
