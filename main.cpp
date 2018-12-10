@@ -11,7 +11,7 @@ int main() {
 	BlockList test = BlockList("hahaha");
 	test.insert("aba", 578237);
 	test.insert("ffq", 155);
-	test.insert("ava", 3424324);
+	test.insert("ava", 155);
 	test.insert("aca", 5782370);
 	test.insert("qqiiyyy", 1550);
 	test.insert("vfdbf", 34243240);

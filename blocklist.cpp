@@ -37,7 +37,7 @@ BlockList::BlockList(std::string _name) : name(_name) {
 
 
 //void BlockList::locate(std::ifstream &stream, int thisBlock) {
-//	stream.seekg(4 + thisBlock * blockSize);
+//	stream.seekp(4 + thisBlock * blockSize);
 //}
 //
 //void BlockList::nextBlock(std::ifstream &stream, int thisBlock) {
@@ -50,9 +50,9 @@ std::vector<int> BlockList::find(std::string index) {
 	std::fstream file(name);
 	//std::cerr << file.tellg() << std::endl;
 	int blockNum;
-	//file.seekg(0, std::ios::end);
+	//file.seekp(0, std::ios::end);
 	//std::cerr << file.tellg() << std::endl;
-	file.seekg(0);
+	file.seekp(0);
 	//std::cerr << file.tellg() << std::endl;
 	readInt(file, blockNum);
 	//std::cerr << file.tellg() << std::endl;
@@ -64,7 +64,7 @@ std::vector<int> BlockList::find(std::string index) {
 	int lastPos = 4, thisPos = 4;
 	for (thisBlock = 0; thisBlock < blockNum; ++thisBlock) {
 		//std::cerr << file.tellg() << std::endl;
-		file.seekg(4, std::ios::cur);
+		file.seekp(4, std::ios::cur);
 		int cnt;
 		//std::cerr << file.tellg() << std::endl;
 		readInt(file, cnt);
@@ -78,14 +78,14 @@ std::vector<int> BlockList::find(std::string index) {
 			}
 			lastPos = thisPos;
 		}
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 		readInt(file, thisPos);
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 	}
 	if (start == -1) start = 4;
 	//if (end == -1) end = lastPos;
 	std::vector<int> res;
-	file.seekg(start);
+	file.seekp(start);
 	while (file.tellg() != end && file.tellg() != 0) {
 		int nextPos, cnt;
 		readInt(file, nextPos);
@@ -99,7 +99,7 @@ std::vector<int> BlockList::find(std::string index) {
 				res.push_back(_);
 			}
 		}
-		file.seekg(nextPos);
+		file.seekp(nextPos);
 	}
 	return res;
 	file.close();
@@ -115,7 +115,7 @@ void BlockList::del(std::string index, int key) {
 	int start = -1, end = -1;
 	int lastPos = 4, thisPos = 4;
 	for (thisBlock = 0; thisBlock < blockNum; ++thisBlock) {
-		file.seekg(4, std::ios::cur);
+		file.seekp(4, std::ios::cur);
 		int cnt;
 		readInt(file, cnt);
 		if (cnt > 0) {
@@ -127,13 +127,13 @@ void BlockList::del(std::string index, int key) {
 			}
 			lastPos = thisPos;
 		}
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 		readInt(file, thisPos);
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 	}
 	if (start == -1) start = 4;
 	//if (end == -1) end = lastPos;
-	file.seekg(start);
+	file.seekp(start);
 	while (file.tellg() != end && file.tellg() != 0) {
 		int nextPos, cnt;
 		readInt(file, nextPos);
@@ -148,7 +148,7 @@ void BlockList::del(std::string index, int key) {
 				writeInt(file, -1);
 			}
 		}
-		file.seekg(nextPos);
+		file.seekp(nextPos);
 	}
 	file.close();
 }
@@ -163,7 +163,7 @@ void BlockList::insert(std::string index, int key) {
 	int start = -1;
 	int lastPos = 4, thisPos = 4;
 	for (thisBlock = 0; thisBlock < blockNum; ++thisBlock) {
-		file.seekg(4, std::ios::cur);
+		file.seekp(4, std::ios::cur);
 		int cnt;
 		readInt(file, cnt);
 		if (cnt > 0) {
@@ -174,31 +174,31 @@ void BlockList::insert(std::string index, int key) {
 			}
 		}
 		lastPos = thisPos;
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 		readInt(file, thisPos);
-		file.seekg(thisPos);
+		file.seekp(thisPos);
 	}
 	if (start == -1) start = lastPos;
-	file.seekg(start);
+	file.seekp(start);
 	int next;
 	readInt(file, next);
 	int cnt;
 	readInt(file, cnt);
 	if (cnt == size) {
 		int end = 4 + blockNum * blockSize;
-		file.seekg(0);
+		file.seekp(0);
 		writeInt(file, blockNum + 1);
-		file.seekg(start);
+		file.seekp(start);
 		int next;
 		readInt(file, next);
-		file.seekg(start);
+		file.seekp(start);
 		writeInt(file, end);
-		file.seekg(end);
+		file.seekp(end);
 		writeInt(file, next);
 		writeInt(file, size / 2);
 		int to = file.tellg();
 		int from = start + 8 + (size / 2) * (40 + 4);
-		file.seekg(start + 4);
+		file.seekp(start + 4);
 		writeInt(file, size / 2);
 		while (from != start + blockSize) {
 			char t;
@@ -209,40 +209,62 @@ void BlockList::insert(std::string index, int key) {
 			file.write(&t, 1);
 			to++;
 		}
-		file.seekg(end + 8);
-		string tmp;
+		file.seekp(end + 8);
+		std::string tmp;
 		readString(file, tmp);
+		if (index >= tmp) start = end;
 	}
-	file.seekg(start);
+	file.seekp(start);
 	readInt(file, next);
 	readInt(file, cnt);
 	for (int i = 1; i <= cnt; ++i) {
 		std::string p;
 		readString(file, p);
-		file.seekg(-40, std::ios::cur);
+		file.seekp(-40, std::ios::cur);
 		if (p > index) {
 			int now = file.tellg();
-			file.seekg(start + 8 + cnt * 44);
+			file.seekp(start + 8 + cnt * 44);
 			for (;;) {
+				std::cerr << file.tellp() << std::endl;
 				if (file.tellg() == now) break;
+				file.seekp(-44, std::ios::cur);
+				std::cerr << file.tellp() << std::endl;
 				char s[44];
-				file.seekg(-44, std::ios::cur);
 				file.read(s, 44);
+				std::cerr << file.gcount() << std::endl;
+				std::cerr.write(s, 44) << std::endl;
 				file.write(s, 44);
-				file.seekg(-88, std::ios::cur);
-				//file.seekg(-40, std::ios::cur);
+				std::cerr << file.gcount() << std::endl;
+				file.seekp(-44, std::ios::cur);
+				file.read(s, 44);
+				std::cerr << file.gcount() << std::endl;
+				std::cerr.write(s, 44) << std::endl << std::endl;
+				file.seekp(-88, std::ios::cur);
+				std::cerr << file.tellp() << std::endl;
+				//file.seekp(-40, std::ios::cur);
 			}
 			break;
 		}
-		file.seekg(44, std::ios::cur);
+		file.seekp(44, std::ios::cur);
 	}
+	int __ = file.tellg();
+	file.seekp(start+ 8);
+	for (int i = 0; i < cnt; ++i) {
+		std::string _;
+		int ___;
+		readString(file, _);
+		//std::cerr << _ << " ";
+		readInt(file, ___);
+	}
+	//std::cerr << std::endl;
+	file.seekp(__);
 	int p = file.tellg();
-	//file.seekg(-40, std::ios::cur);
+	//file.seekp(-40, std::ios::cur);
 	writeString(file, index);
 	writeInt(file, key);
 	int q = file.tellg();
-	file.seekg(start + 4);
+	file.seekp(start + 4);
 	writeInt(file, cnt + 1);
-	std::cerr << cnt + 1 << " " << q << std::endl;
+	//std::cerr << cnt + 1 << " " << q << std::endl;
 	file.close();
 }
