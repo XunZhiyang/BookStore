@@ -1,7 +1,15 @@
-#include "pch.h"
+//#include "pch.h"
 #include <fstream>
 #include "opfile.h"
 
+bool exist(std::string name) {
+	std::ifstream test(name);
+	if (test.good()) {
+		test.close();
+		return true;
+	}
+	return false;
+}
 void readInt(std::fstream &stream, int &t) {
 	stream.read(reinterpret_cast<char *>(&t), 4);
 	//std::cerr << stream.gcount() << std::endl;
@@ -16,6 +24,7 @@ void readString(std::fstream &stream, std::string &s, int _size) {
 	ss[_size] = '\0';
 	stream.read(ss, 40);
 	s = ss;
+	delete ss;
 }
 
 void writeString(std::fstream &stream, std::string &s, int _size) {

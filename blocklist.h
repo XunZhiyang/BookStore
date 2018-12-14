@@ -2,7 +2,7 @@
 #include<string>
 #include<vector>
 class BlockList {
-	static const int size = 1000;  // must be even
+	static const int size = 100;  // must be even
 	static const int blockSize = 40 * size + 4 * size + 2 * 4;
 	class Block {
 		int next;

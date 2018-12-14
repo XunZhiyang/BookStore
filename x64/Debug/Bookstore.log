@@ -1,7 +1,2 @@
 ﻿  main.cpp
-  store.cpp
-  user.cpp
-e:\study\programming\bookstore\bookstore\bookstore\user.cpp(40): warning C4101: “msg”: 未引用的局部变量
-  正在生成代码...
-e:\study\programming\bookstore\bookstore\bookstore\store.cpp(28): warning C4715: “Store::load”: 不是所有的控件路径都返回值
   Bookstore.vcxproj -> E:\study\programming\Bookstore\bookstore\x64\Debug\Bookstore.exe

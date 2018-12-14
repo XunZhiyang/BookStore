@@ -1,4 +1,4 @@
-#include "pch.h"
+//#include "pch.h"
 #include "blocklist.h"
 #include "opfile.h"
 #include<vector>
@@ -8,7 +8,8 @@
 
 
 BlockList::BlockList(std::string _name) : name(_name) {
-	std::fstream file(name, std::ios::out);
+	if (exist(name)) return;
+	std::fstream file(name, std::ios::binary | std::ios::out);
 	writeInt(file, 1);
 	writeInt(file, 0);
 	writeInt(file, 0);
@@ -27,7 +28,7 @@ BlockList::BlockList(std::string _name) : name(_name) {
 //}
 
 std::vector<int> BlockList::find(std::string index) {
-	std::fstream file(name);
+	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	//std::cerr << file.tellg() << std::endl;
 	int blockNum;
 	//file.seekp(0, std::ios::end);
@@ -81,21 +82,25 @@ std::vector<int> BlockList::find(std::string index) {
 		}
 		file.seekp(nextPos);
 	}
-	return res;
 	file.close();
+	return res;
 }
 void BlockList::del(std::string index, int key) {
-	std::fstream file(name);
+	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	//std::ofstream file(namee)
 	int blockNum;
+	//std::cerr << file.tellg() << std::endl;
 	readInt(file, blockNum);
 	// strings + mapped int + pointer + count element in each block;
+	//std::cerr << file.gcount() << std::endl;
+	//std::cerr << file.tellg() << std::endl;
 	std::string tmp;
 	int thisBlock;
 	int start = -1, end = -1;
 	int lastPos = 4, thisPos = 4;
 	for (thisBlock = 0; thisBlock < blockNum; ++thisBlock) {
-		file.seekp(4, std::ios::cur);
+		file.seekg(4, std::ios::cur);
+		//std::cerr << file.tellg() << std::endl;
 		int cnt;
 		readInt(file, cnt);
 		if (cnt > 0) {
@@ -126,6 +131,8 @@ void BlockList::del(std::string index, int key) {
 			if (tmp == index && _ == key) {
 				file.seekp(-4, std::ios::cur);
 				writeInt(file, -1);
+				file.close();
+				return;
 			}
 		}
 		file.seekp(nextPos);
@@ -134,7 +141,7 @@ void BlockList::del(std::string index, int key) {
 }
 
 void BlockList::insert(std::string index, int key) {
-	std::fstream file(name);
+	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	int blockNum;
 	readInt(file, blockNum);
 	// strings + mapped int + pointer + count element in each block;
@@ -205,41 +212,34 @@ void BlockList::insert(std::string index, int key) {
 			int now = file.tellg();
 			file.seekp(start + 8 + cnt * 44);
 			for (;;) {
-				std::cerr << file.tellp() << std::endl;
+				//std::cerr << file.tellp() << std::endl;
 				if (file.tellg() == now) break;
 				file.seekp(-44, std::ios::cur);
 				char s[100];
 				for (int i = 0; i < 100; ++i) s[i] = '\0';
+				int _ = file.tellg();
 				file.read(s, 44);
-				std::cerr << file.tellp() << std::endl;
-				std::cerr << file.gcount() << std::endl;
-				std::cerr.write(s, 44) << std::endl;
+				//std::cerr.write(s, 44) << std::endl;
+				file.seekp(_ + 44);
 				file.write(s, 44);
-				std::cerr << file.tellp() << std::endl;
-				std::cerr << file.gcount() << std::endl;
-				file.seekp(-44, std::ios::cur);
-				std::cerr << file.tellp() << std::endl;
-				file.read(s, 44);
-				std::cerr << file.tellp() << std::endl;
-				std::cerr << file.gcount() << std::endl;
-				std::cerr.write(s, 44) << std::endl << std::endl;
+				//file.seekg(-44, std::ios::cur);
+				//file.read(s, 44);
+				//std::cerr.write(s, 44) << std::endl << std::endl;
 				file.seekp(-88, std::ios::cur);
-				std::cerr << file.tellp() << std::endl;
-				//file.seekp(-40, std::ios::cur);
 			}
 			break;
 		}
 		file.seekp(44, std::ios::cur);
 	}
 	int __ = file.tellg();
-	file.seekp(start+ 8);
-	for (int i = 0; i < cnt; ++i) {
-		std::string _;
-		int ___;
-		readString(file, _);
-		//std::cerr << _ << " ";
-		readInt(file, ___);
-	}
+	//file.seekp(start+ 8);
+	//for (int i = 0; i < cnt; ++i) {
+	//	std::string _;
+	//	int ___;
+	//	readString(file, _);
+	//	//std::cerr << _ << " ";
+	//	readInt(file, ___);
+	//}
 	//std::cerr << std::endl;
 	file.seekp(__);
 	int p = file.tellg();

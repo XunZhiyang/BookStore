@@ -1,7 +1,13 @@
 ﻿  blocklist.cpp
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(187): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(196): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(216): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(229): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
-e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(233): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(179): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(205): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(234): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(245): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\blocklist.cpp(249): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+  main.cpp
+  opfile.cpp
+  store.cpp
+  user.cpp
+e:\study\programming\bookstore\bookstore\bookstore\user.cpp(40): warning C4101: “msg”: 未引用的局部变量
+  正在生成代码...
   Bookstore.vcxproj -> E:\study\programming\Bookstore\bookstore\Debug\Bookstore.exe
