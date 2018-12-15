@@ -12,7 +12,7 @@ int main() {
 	std::cout.setf(std::ios::fixed);
 	std::cout.precision(2);
 	Store Bookstore;
-
+	std::cerr << "Welcome to the bookstore administration system!\n";
 	if(exist("command.txt")){
 		if (Bookstore.load("command.txt") == 0)  return 0;
 	}
