@@ -218,7 +218,7 @@ void Store::useradd(std::string &command, int pos) {
 	pos += 2;
 	npos = command.find(" ", pos);
 	std::string name = command.substr(pos, npos - pos);
-	if(level > user.level) throw(std::domain_error("Invalid"));
+	if(level >= user.level) throw(std::domain_error("Invalid"));
 	addUser(username, password, name, level);
 }
 
