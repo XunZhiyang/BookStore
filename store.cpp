@@ -305,7 +305,7 @@ int Store::execute(std::string &command) {
 		}
 		else {
 			if (pos == command.length() - 1) {
-				valid(3);
+				valid(1);
 				showall();
 			} else {
 				valid(1);
