@@ -223,14 +223,18 @@ void Store::useradd(std::string &command, int pos) {
 }
 
 void Store::reg(std::string &command, int pos) {
+	if (pos == command.length()) throw(std::invalid_argument("Invalid"));
 	int npos = command.find(" ", pos);
 	std::string username = command.substr(pos, npos - pos);
 	pos = npos + 1;
+	if (pos == command.length()) throw(std::invalid_argument("Invalid"));
 	npos = command.find(" ", pos);
 	std::string password = command.substr(pos, npos - pos);
 	pos = npos + 1;
+	if (pos == command.length()) throw(std::invalid_argument("Invalid"));
 	npos = command.find(" ", pos);
 	std::string name = command.substr(pos, npos - pos);
+	if (npos + 1 != command.length()) throw(std::invalid_argument("Invalid"));
 	addUser(username, password, name, 1);
 }
 
