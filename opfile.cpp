@@ -22,9 +22,9 @@ void writeInt(std::fstream &stream, int t) {
 void readString(std::fstream &stream, std::string &s, int _size) {
 	char *ss = new char[_size + 1];
 	ss[_size] = '\0';
-	stream.read(ss, 40);
+	stream.read(ss, _size);
 	s = ss;
-	delete ss;
+	delete []ss;
 }
 
 void writeString(std::fstream &stream, std::string &s, int _size) {

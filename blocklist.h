@@ -10,6 +10,8 @@ class BlockList {
 public:
 	std::string name;
 
+	BlockList() = default;
+
 	BlockList(std::string _name);
 
 	//void locate(std::ifstream &stream, int thisblock);

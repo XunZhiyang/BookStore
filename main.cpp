@@ -1,18 +1,34 @@
 ﻿// Bookstore.cpp : 此文件包含 "main" 函数。程序执行将在此处开始并结束。
 //
-
-//#include "pch.h"
 #include <fstream>
 #include <string>
 #include <iostream>
-#include "blocklist.h"
+//#include "blocklist.h"
+#include "opfile.h"
 #include "store.h"
 
-
+    
 int main() {
 	Store Bookstore;
-	if(exist("command.txt")){
-		if (Bookstore.load("command.txt") == 0)  return 0;
+
+	//if(exist("command.txt")){
+		//if (Bookstore.load("command.txt") == 0)  return 0;
+	//}
+	char s[201];
+	s[200] = '\0';
+	for (;;) {
+		std::cin.getline(s, 200);
+		std::string str = s;
+		try {
+			int p = Bookstore.execute(str);
+			if (p == 0) return 0;
+		}
+		catch (std::invalid_argument p) {
+			std::cout << p.what() << "\n";
+		}
+		catch (std::domain_error p) {
+			std::cout << p.what() << "\n";
+		}
 	}
 }
 //std::string randstring() {

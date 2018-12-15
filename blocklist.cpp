@@ -37,8 +37,7 @@ std::vector<int> BlockList::find(std::string index) {
 	//std::cerr << file.tellg() << std::endl;
 	readInt(file, blockNum);
 	//std::cerr << file.tellg() << std::endl;
-//int blockSize = 41 * size + 4 * size + 2 * 4;
-// strings + mapped int + pointer + count element in each block;
+	// strings + mapped int + pointer + count element in each block;
 	std::string tmp;
 	int thisBlock;
 	int start = -1, end = -1;
