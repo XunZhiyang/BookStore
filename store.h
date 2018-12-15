@@ -16,21 +16,31 @@ public:
 
 	BlockList &ch(std::string);
 
-	int execute(std::string);
+	int execute(std::string &);
 
 	void valid(int level);
 
-	void modify(std::string command, int pos);
+	void modify(std::string &command, int pos);
 
-	void import(std::string command, int pos);
+	void import(std::string &command, int pos);
 
-	void showFinance(std::string command, int pos);
+	void showFinance(std::string &command, int pos);
 
 	void intersect(std::vector<int> &, std::vector<int>);
 
-	void buy(std::string command, int pos);
+	void buy(std::string &command, int pos);
 
-	void show(std::string command, int pos);
+	void show(std::string &command, int pos);
 
-	//int load(std::string);
+	void su(std::string &command, int pos);
+
+	void useradd(std::string &command, int pos);
+
+	void reg(std::string &command, int pos);
+
+	void del(std::string &command, int pos);
+
+	void passwd(std::string &command, int pos);
+
+	int load(std::string);
 };

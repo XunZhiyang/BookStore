@@ -24,3 +24,5 @@ User findUser(std::string);
 int count(std::string);
 
 int addUser(std::string username, std::string password, std::string name, char level);
+
+void deleteUser(std::string username);

@@ -23,7 +23,6 @@ User findUser(std::string s) {
 	while (userData.peek() != EOF) {
 		std::string username, password, name;
 		char level;
-		std::cerr << userData.good() << std::endl;
 		readString(userData, username, 30);
 		readString(userData, password, 30);
 		readString(userData, name, 20);
@@ -49,7 +48,7 @@ int count(std::string s) {
 
 int addUser(std::string username, std::string password, std::string name, char level) {
 	if (count(username)) return 0;
-	std::fstream userData("userData", std::ios::binary | std::ios::out);
+	std::fstream userData("userData", std::ios::binary | std::ios::out | std::ios::in);
 	userData.seekp(0, std::ios::end);
 	writeString(userData, username, 30);
 	writeString(userData, password, 30);
@@ -57,4 +56,25 @@ int addUser(std::string username, std::string password, std::string name, char l
 	userData.write(&level, 1);
 	userData.close();
 	return 1;
+}
+
+void deleteUser(std::string s) {
+	std::fstream userData("userData", std::ios::in | std::ios::binary | std::ios::out);
+	while (userData.peek() != EOF) {
+		std::string username, password, name;
+		char level;
+		readString(userData, username, 30);
+		if (username == s) {
+			username.clear();
+			userData.seekp(-30, std::ios::cur);
+			writeString(userData, username, 30);
+			userData.close();
+			return;
+		}
+		else {
+			userData.seekp(51, std::ios::cur);
+		}
+	}
+	userData.close();
+	//throw(std::invalid_argument("NO SUCH USER"));
 }

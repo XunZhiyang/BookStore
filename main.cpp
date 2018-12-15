@@ -11,9 +11,9 @@
 int main() {
 	Store Bookstore;
 
-	//if(exist("command.txt")){
-		//if (Bookstore.load("command.txt") == 0)  return 0;
-	//}
+	if(exist("command.txt")){
+		if (Bookstore.load("command.txt") == 0)  return 0;
+	}
 	char s[201];
 	s[200] = '\0';
 	for (;;) {

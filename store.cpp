@@ -36,7 +36,7 @@ void Store::valid(int level) {
 	if (user.level < level) throw(std::domain_error("Invalid level"));
 }
 
-void Store::modify(std::string command, int pos) {
+void Store::modify(std::string &command, int pos) {
 	if (select == -1) throw(std::invalid_argument("Invalid not selected"));
 	for (;;) {
 		int npos = command.find(" ", pos);
@@ -90,7 +90,7 @@ void Store::modify(std::string command, int pos) {
 	}
 }
 
-void Store::import(std::string command, int pos) {
+void Store::import(std::string &command, int pos) {
 	int npos = command.find(" ", pos);
 	auto qua = command.substr(pos, npos - pos);
 	std::stringstream ss(qua);
@@ -104,7 +104,7 @@ void Store::import(std::string command, int pos) {
 	Book::modifyq(select, q);
 }
 
-void Store::showFinance(std::string command, int pos) {
+void Store::showFinance(std::string &command, int pos) {
 	std::stringstream ss(command.substr(pos));
 	int times = 0x3f3f3f3f;
 	ss >> times;
@@ -136,7 +136,7 @@ void Store::intersect(std::vector<int> &a, std::vector<int> b) {
 bool ISBNcmp(int x, int y) {
 	return Book::getISBN(x) < Book::getISBN(y);
 }
-void Store::show(std::string command, int pos) {
+void Store::show(std::string &command, int pos) {
 	bool flag = true;
 	std::vector<int> ans;
 	for (;;) {
@@ -149,7 +149,7 @@ void Store::show(std::string command, int pos) {
 			int equ = _.find("=");
 			c = _.substr(1, equ - 1);
 			val = _.substr(equ + 1);
-			pos = npos + 1;
+			pos = npos + 1; 
 		}
 		else {
 			c = _.substr(1, quo - 2);
@@ -172,7 +172,7 @@ void Store::show(std::string command, int pos) {
 	}
 }
 
-void Store::buy(std::string command, int pos) {
+void Store::buy(std::string &command, int pos) {
 	int npos = command.find(" ", pos);
 	auto isbn = command.substr(pos, npos - pos);
 	auto now = ISBN.find(isbn);	
@@ -191,17 +191,76 @@ void Store::buy(std::string command, int pos) {
 	Book::modifyq(select, q - tq);
 }
 
-void Store::su(std::string command, int pos) {
+void Store::su(std::string &command, int pos) {
 	int npos = command.find(" ", pos);
 	std::string username = command.substr(pos, npos - pos);
 	pos = npos + 1;
 	npos = command.find(" ", pos);
 	std::string password = command.substr(pos, npos - pos);
-
-	
+	auto nuser = findUser(username);
+	if (password == nuser.password) {
+		user = nuser;
+		std::cerr << "Hello, " << user.name << "\n";
+	}
+	else throw(std::invalid_argument("Invalid wrong password"));
 }
 
-int Store::execute(std::string command) {
+void Store::useradd(std::string &command, int pos) {
+	int npos = command.find(" ", pos);
+	std::string username = command.substr(pos, npos - pos);
+	pos = npos + 1;
+	npos = command.find(" ", pos);
+	std::string password = command.substr(pos, npos - pos);
+	pos = npos + 1;
+	char level = command[pos] - '0';
+	pos += 2;
+	npos = command.find(" ", pos);
+	std::string name = command.substr(pos, npos - pos);
+	if(level > user.level) throw(std::domain_error("Invalid create user"));
+	addUser(username, password, name, level);
+}
+
+void Store::reg(std::string &command, int pos) {
+	int npos = command.find(" ", pos);
+	std::string username = command.substr(pos, npos - pos);
+	pos = npos + 1;
+	npos = command.find(" ", pos);
+	std::string password = command.substr(pos, npos - pos);
+	pos = npos + 1;
+	npos = command.find(" ", pos);
+	std::string name = command.substr(pos, npos - pos);
+	addUser(username, password, name, 1);
+}
+
+void Store::del(std::string &command, int pos) {
+	int npos = command.find(" ", pos);
+	std::string username = command.substr(pos, npos - pos);
+	deleteUser(username);
+}
+
+void Store::passwd(std::string &command, int pos) {
+	int npos = command.find(" ", pos);
+	std::string username = command.substr(pos, npos - pos);
+	pos = npos + 1;
+	npos = command.find(" ", pos);
+	std::string password1 = command.substr(pos, npos - pos);
+	if (user.level == 7) {
+		user.password = password1;
+		deleteUser(user.username);
+		addUser(user.username, user.password, user.name, user.level);
+	}
+	else {
+		if (password1 != user.password) throw(std::invalid_argument("Invalid wrong passwd"));
+		pos = npos + 1;
+		npos = command.find(" ", pos);
+		std::string passwd = command.substr(pos, npos - pos);
+		user.password = passwd;
+		deleteUser(user.username);
+		addUser(user.username, user.password, user.name, user.level);
+	}
+}
+
+int Store::execute(std::string &command) {
 	command += " ";
 	int pos = command.find(" ");
 	std::string t = command.substr(0, pos);
@@ -243,6 +302,25 @@ int Store::execute(std::string command) {
 	else if (t == "su") {
 		su(command, pos + 1);
 	}
+	else if (t == "logout") {
+		valid(1);
+		user = User("", "", "", 0);
+	}
+	else if (t == "useradd") {
+		valid(3);
+		useradd(command, pos + 1);
+	}
+	else if (t == "register") {
+		reg(command, pos + 1);
+	}
+	else if (t == "delete") {
+		valid(7);
+		del(command, pos + 1);
+	}
+	else if (t == "passwd") {
+		valid(1);
+		passwd(command, pos + 1);
+	}
 	else if (t == "exit") {
 		return 0;
 	}
@@ -250,14 +328,24 @@ int Store::execute(std::string command) {
 	return 1;
 }
 
-
-//int Store::load(std::string fileName) {
-//	std::ifstream loadFile(fileName, std::ios::binary);
-//	if (!loadFile.good()) throw(std::invalid_argument("Invalid"));
-//	char s[250];
-//	while(loadFile.peek() != EOF) {
-//		loadFile.getline(s, 250);
-//		int p = execute(s);
-//		if (p == 0) return 0;
-//	}
-//}
+int Store::load(std::string fileName) {
+	std::ifstream loadFile(fileName, std::ios::binary);
+	if (!loadFile.good()) throw(std::invalid_argument("Invalid"));
+	char s[201];
+	s[200] = '\0';
+	for (;;) {
+		loadFile.getline(s, 200);
+		std::string str = s;
+		try {
+			int p = execute(str);
+			if (p == 0) break;
+		}
+		catch (std::invalid_argument p) {
+			std::cout << p.what() << "\n";
+		}
+		catch (std::domain_error p) {
+			std::cout << p.what() << "\n";
+		}
+	}
+	loadFile.close();
+}
