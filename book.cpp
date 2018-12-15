@@ -90,7 +90,7 @@ namespace Book { // 20 + 3 * 40 + 6(price) + 4(quantity) = 150 bytes per book
 		}
 		int q = 0;
 		readInt(file, q);
-		std::cout << q << "±¾\n";
+		std::cout << q << "æœ¬\n";
 		file.close();
 	}
 	std::vector<int> allList() {
