@@ -33,7 +33,7 @@ User findUser(std::string s) {
 		}
 	}
 	userData.close();
-	throw(std::invalid_argument("NO SUCH USER"));
+	throw(std::invalid_argument("Invalid"));
 }
 
 int count(std::string s) {
@@ -47,7 +47,7 @@ int count(std::string s) {
 }
 
 int addUser(std::string username, std::string password, std::string name, char level) {
-	if (count(username)) return 0;
+	if (count(username)) throw(std::invalid_argument("Invalid"));
 	std::fstream userData("userData", std::ios::binary | std::ios::out | std::ios::in);
 	userData.seekp(0, std::ios::end);
 	writeString(userData, username, 30);
@@ -76,5 +76,5 @@ void deleteUser(std::string s) {
 		}
 	}
 	userData.close();
-	//throw(std::invalid_argument("NO SUCH USER"));
+	throw(std::invalid_argument("Invalid"));
 }

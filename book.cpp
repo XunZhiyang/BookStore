@@ -1,5 +1,7 @@
 #include <fstream>
+#include <sstream>
 #include <iostream>
+#include <vector>
 #include "book.h"
 #include "opfile.h"
 namespace Book { // 20 + 3 * 40 + 6(price) + 4(quantity) = 150 bytes per book
@@ -77,10 +79,28 @@ namespace Book { // 20 + 3 * 40 + 6(price) + 4(quantity) = 150 bytes per book
 		readString(file, s, 40);
 		std::cout << s << "\t";
 		readString(file, s, 6);
-		std::cout << s << "\t";
+		if (s[0] == '\0') {
+			std::cout << "0.00\t";
+		}
+		else {
+			std::stringstream ss(s);
+			double p;
+			ss >> p;
+			std::cout << p << "\t";
+		}
 		int q = 0;
 		readInt(file, q);
 		std::cout << q << "±¾\n";
 		file.close();
+	}
+	std::vector<int> allList() {
+		std::vector<int> c;
+		std::fstream file("bookData", std::ios::binary | std::ios::in);
+		file.seekg(0, std::ios::end);
+		int u = file.tellg();
+		for (int i = 0; i < u; i += 150) {
+			c.push_back(i);
+		}
+		return c;
 	}
 }

@@ -1,5 +1,6 @@
 #pragma once
-#include<string>
+#include <string>
+#include <vector>
 namespace Book {  //The file saving data is "bookData"
 	std::pair<int, int> getPos(std::string c);
 
@@ -16,4 +17,6 @@ namespace Book {  //The file saving data is "bookData"
 	std::string getISBN(int pos);
 
 	void display(int pos);
+
+	std::vector<int> allList();
 }

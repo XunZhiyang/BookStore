@@ -1,4 +1,4 @@
-﻿  user.cpp
-e:\study\programming\bookstore\bookstore\bookstore\user.cpp(43): warning C4101: “msg”: 未引用的局部变量
-e:\study\programming\bookstore\bookstore\bookstore\user.cpp(65): warning C4101: “level”: 未引用的局部变量
+﻿  book.cpp
+e:\study\programming\bookstore\bookstore\bookstore\book.cpp(20): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\book.cpp(100): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
   Bookstore.vcxproj -> E:\study\programming\Bookstore\bookstore\x64\Debug\Bookstore.exe

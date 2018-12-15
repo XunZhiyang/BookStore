@@ -1,5 +1,5 @@
 #pragma once
-#include <stack>
+#include <vector>
 #include <string>
 #include "user.h"
 #include "blocklist.h"
@@ -10,7 +10,7 @@ public:
 	User user;
 	BlockList ISBN, name, author, keyword;
 	int select = -1;
-	std::stack<double> stack;
+	std::vector<double> vector;
 
     Store();
 
