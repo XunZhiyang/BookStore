@@ -32,3 +32,13 @@ void writeString(std::fstream &stream, std::string &s, int _size) {
 	for (int i = len; i < _size; ++i) s += '\0';
 	stream.write(s.c_str(), _size);
 }
+
+void writeDouble(std::fstream &stream, double t) {
+	stream.write(reinterpret_cast<char *>(&t), sizeof(double));
+}
+
+double readDouble(std::fstream &stream) {
+	double t;
+	stream.read(reinterpret_cast<char *>(&t), sizeof(double));
+	return t;
+}

@@ -7,7 +7,7 @@
 #include "opfile.h"
 #include "store.h"
 
-    
+
 int main() {
 	std::cout.setf(std::ios::fixed);
 	std::cout.precision(2);
@@ -57,7 +57,7 @@ int main() {
 //	}
 //	//test.insert("aba", 578237);
 //	test.insert("aha", 155);
-//	test.insert("ffq", 156665);
+//	test.insert("ffq", 156665);  
 //	test.insert("aca", 57482370);
 //	test.del("aha", 155);
 //	test.insert("qqiiyyy", 1550);

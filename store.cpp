@@ -102,7 +102,10 @@ void Store::import(std::string &command, int pos) {
 	double p = 0;
 	std::stringstream sss(command.substr(npos + 1));
 	sss >> p;
-	vector.push_back(-p);
+	std::fstream file("finance", std::ios::binary | std::ios::in | std::ios::out);
+	file.seekp(0, std::ios::end);
+	writeDouble(file, -p);
+	file.close();
 	q += Book::queryq(select);
 	Book::modifyq(select, q);
 }
@@ -189,7 +192,10 @@ void Store::buy(std::string &command, int pos) {
 	int tq;
 	ss >> tq;
 	if(tq > q) throw(std::invalid_argument("Invalid"));
-	vector.push_back(price * tq);
+	std::fstream file("finance", std::ios::in | std::ios::out | std::ios::binary);
+	file.seekp(0, std::ios::cur);
+	writeDouble(file, price * tq);
+	file.close();
 	Book::modifyq(sel, q - tq);
 }
 
