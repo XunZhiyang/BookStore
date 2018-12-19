@@ -108,7 +108,7 @@ void Store::import(std::string &command, int pos) {
 	sss >> p;
 	std::fstream file("finance", std::ios::binary | std::ios::in | std::ios::out);
 	file.seekp(0, std::ios::end);
-	std::cerr << file.tellp() << " " << -p << std::endl;
+	//std::cerr << file.tellp() << " " << -p << std::endl;
 	writeDouble(file, -p);
 	file.close();
 	q += Book::queryq(select);
@@ -129,7 +129,7 @@ void Store::showFinance(std::string &command, int pos) {
 		for (int i = 0; i < times; ++i) {
 			u = file.tellg();
 			double p = readDouble(file);
-			std::cerr << " " << file.tellg() << " " << p << std::endl;
+			//std::cerr << " " << file.tellg() << " " << p << std::endl;
 			if (p > 0) income += p;
 			else expense -= p;
 			if (file.tellg() == sizeof(double)) break;
@@ -210,7 +210,7 @@ void Store::buy(std::string &command, int pos) {
 	if (tq > q) throw(std::invalid_argument("Invalid"));
 	std::fstream file("finance", std::ios::in | std::ios::out | std::ios::binary);
 	file.seekp(0, std::ios::end);
-	std::cerr << file.tellp() << " " << price * tq << std::endl;
+	//std::cerr << file.tellp() << " " << price * tq << std::endl;
 	writeDouble(file, price * tq);
 	file.close();
 	Book::modifyq(sel, q - tq);
