@@ -15,14 +15,18 @@ Store::Store() {
 		userData.close();
 		std::ofstream bookData("bookData");
 		bookData.close();
-		addUser("root", "sjtu", "BOSS", 7);
+		std::ofstream finance("finance");
+		finance.close();
+		std::string root = "root", sjtu = "sjtu", BOSS = "BOSS";
+		addUser(root, sjtu, BOSS, 7);
 	}
 	ISBN = BlockList("ISBN");
 	name = BlockList("name");
 	author = BlockList("author");
 	keyword = BlockList("keyword");
-	user = findUser("root");
-}	
+	std::string root = "root";
+	user = findUser(root);
+}
 
 BlockList &Store::ch(std::string listName) {
 	if (listName == "ISBN") return ISBN;
@@ -41,7 +45,7 @@ void Store::modify(std::string &command, int pos) {
 	for (;;) {
 		int npos = command.find(" ", pos);
 		if (npos == -1) break;
-		auto _ = command.substr(pos, npos - pos);
+		auto &&_ = command.substr(pos, npos - pos);
 		int quo = _.find("\"");
 		std::string c, val;
 		if (quo == -1) {
@@ -54,25 +58,25 @@ void Store::modify(std::string &command, int pos) {
 			c = _.substr(1, quo - 2);
 			int quo2 = command.find("\"", pos + quo + 1);
 			val = command.substr(pos + quo + 1, quo2 - (pos + quo + 1));
-			pos = quo2 + 2;	
+			pos = quo2 + 2;
 		}
 		if (c == "ISBN" && ISBN.find(val).size()) {
 			throw(std::invalid_argument("Invalid"));
 		}
 		if (c != "price") {
-			auto old = Book::query(select, c);
+			auto &&old = Book::query(select, c);
 			int par = old.find("|");
 			if (old[0] != '\0') {
 				if (par == -1) ch(c).del(old, select);
 				else {
 					int ppos = 0;
 					while (par != -1) {
-						auto old1 = old.substr(ppos, par - ppos);
+						auto &&old1 = old.substr(ppos, par - ppos);
 						ch(c).del(old1, select);
 						ppos = par + 1;
 						par = val.find("|", ppos);
 					}
-					auto old1 = old.substr(ppos);
+					auto &&old1 = old.substr(ppos);
 					ch(c).del(old1, select);
 				}
 			}
@@ -95,7 +99,7 @@ void Store::modify(std::string &command, int pos) {
 
 void Store::import(std::string &command, int pos) {
 	int npos = command.find(" ", pos);
-	auto qua = command.substr(pos, npos - pos);
+	auto &&qua = command.substr(pos, npos - pos);
 	std::stringstream ss(qua);
 	int q = 0;
 	ss >> q;
@@ -104,6 +108,7 @@ void Store::import(std::string &command, int pos) {
 	sss >> p;
 	std::fstream file("finance", std::ios::binary | std::ios::in | std::ios::out);
 	file.seekp(0, std::ios::end);
+	std::cerr << file.tellp() << " " << -p << std::endl;
 	writeDouble(file, -p);
 	file.close();
 	q += Book::queryq(select);
@@ -115,13 +120,24 @@ void Store::showFinance(std::string &command, int pos) {
 	int times = 0x3f3f3f3f;
 	ss >> times;
 	double income = 0, expense = 0;
-	for (int i = 0; i < times; ++i) {
-		if (i + 1 > vector.size()) break;
-		double p = vector[vector.size() - i - 1];
-		if (p > 0) income += p;
-		else expense -= p;
+	std::fstream file("finance", std::ios::binary | std::ios::in);
+	file.seekg(0, std::ios::end);
+	if (file.tellg() != 0) {
+		int u = file.tellg();
+		file.seekg(-1 * sizeof(double), std::ios::end);
+		u = file.tellg();
+		for (int i = 0; i < times; ++i) {
+			u = file.tellg();
+			double p = readDouble(file);
+			std::cerr << " " << file.tellg() << " " << p << std::endl;
+			if (p > 0) income += p;
+			else expense -= p;
+			if (file.tellg() == sizeof(double)) break;
+			file.seekg(-2 * sizeof(double), std::ios::cur);
+		}
 	}
 	std::cout << "+ " << income << " - " << expense << "\n";
+	file.close();
 }
 
 void Store::intersect(std::vector<int> &a, std::vector<int> b) {
@@ -147,14 +163,14 @@ void Store::show(std::string &command, int pos) {
 	for (;;) {
 		int npos = command.find(" ", pos);
 		if (npos == -1) break;
-		auto _ = command.substr(pos, npos - pos);
+		auto &&_ = command.substr(pos, npos - pos);
 		int quo = _.find("\"");
 		std::string c, val;
 		if (quo == -1) {
 			int equ = _.find("=");
 			c = _.substr(1, equ - 1);
 			val = _.substr(equ + 1);
-			pos = npos + 1; 
+			pos = npos + 1;
 		}
 		else {
 			c = _.substr(1, quo - 2);
@@ -179,21 +195,22 @@ void Store::show(std::string &command, int pos) {
 
 void Store::buy(std::string &command, int pos) {
 	int npos = command.find(" ", pos);
-	auto isbn = command.substr(pos, npos - pos);
-	auto now = ISBN.find(isbn);	
+	auto &&isbn = command.substr(pos, npos - pos);
+	auto &&now = ISBN.find(isbn);
 	if (now.size() == 0) throw(std::invalid_argument("Invalid"));
 	int sel = now[0];
 	int q = Book::queryq(sel);
-	auto p = Book::query(sel, "price");
+	auto &&p = Book::query(sel, "price");
 	std::stringstream sss(p);
-	double price;
+	double price = 0;
 	sss >> price;
 	std::stringstream ss(command.substr(npos + 1));
 	int tq;
 	ss >> tq;
-	if(tq > q) throw(std::invalid_argument("Invalid"));
+	if (tq > q) throw(std::invalid_argument("Invalid"));
 	std::fstream file("finance", std::ios::in | std::ios::out | std::ios::binary);
-	file.seekp(0, std::ios::cur);
+	file.seekp(0, std::ios::end);
+	std::cerr << file.tellp() << " " << price * tq << std::endl;
 	writeDouble(file, price * tq);
 	file.close();
 	Book::modifyq(sel, q - tq);
@@ -205,7 +222,7 @@ void Store::su(std::string &command, int pos) {
 	pos = npos + 1;
 	npos = command.find(" ", pos);
 	std::string password = command.substr(pos, npos - pos);
-	auto nuser = findUser(username);
+	auto &&nuser = findUser(username);
 	if (password == nuser.password) {
 		user = nuser;
 		std::cerr << "Hello, " << user.name << "\n";
@@ -221,10 +238,11 @@ void Store::useradd(std::string &command, int pos) {
 	std::string password = command.substr(pos, npos - pos);
 	pos = npos + 1;
 	char level = command[pos] - '0';
+	//std::cout << (int)level << std::endl;
 	pos += 2;
 	npos = command.find(" ", pos);
 	std::string name = command.substr(pos, npos - pos);
-	if(level >= user.level) throw(std::domain_error("Invalid"));
+	if (level >= user.level) throw(std::domain_error("Invalid"));
 	addUser(username, password, name, level);
 }
 
@@ -286,7 +304,7 @@ int Store::execute(std::string &command) {
 		++pos;
 		valid(3);
 		t = command.substr(pos, command.length() - pos - 1);
-		auto _ = ISBN.find(t);
+		auto &&_ = ISBN.find(t);
 		if (_.size()) select = _[0];
 		else {
 			select = Book::insert();
@@ -313,7 +331,8 @@ int Store::execute(std::string &command) {
 			if (pos == command.length() - 1) {
 				valid(1);
 				showall();
-			} else {
+			}
+			else {
 				valid(1);
 				show(command, pos + 1);
 			}
@@ -328,7 +347,9 @@ int Store::execute(std::string &command) {
 	}
 	else if (t == "logout") {
 		valid(1);
-		user = User("", "", "", 0);
+		std::string tmp;
+		tmp.clear();
+		user = User(tmp, tmp, tmp, 0);
 	}
 	else if (t == "useradd") {
 		valid(3);
@@ -357,7 +378,7 @@ int Store::load(std::string fileName) {
 	if (!loadFile.good()) throw(std::invalid_argument("Invalid"));
 	char s[201];
 	s[200] = '\0';
-	while(loadFile.peek() != EOF) {
+	while (loadFile.peek() != EOF) {
 		loadFile.getline(s, 200);
 		//std::cerr << (int)user.level << std::endl;
 		std::string str = s;

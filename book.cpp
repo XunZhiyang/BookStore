@@ -24,7 +24,7 @@ namespace Book { // 20 + 3 * 40 + 6(price) + 4(quantity) = 150 bytes per book
 		file.close();
 		return pos;
 	}
-	void modify(int pos, std::string c, std::string val) {
+	void modify(int pos, std::string c, std::string &val) {
 		auto tmp = getPos(c);
 		pos += tmp.first;
 		std::fstream file("bookData", std::ios::binary | std::ios::in | std::ios::out);

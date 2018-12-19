@@ -14,13 +14,9 @@ public:
 
 	BlockList(std::string _name);
 
-	//void locate(std::ifstream &stream, int thisblock);
+	void insert(std::string &index, int num);
 
-	//void nextblock(std::ifstream &stream, int thisBLock);
+	std::vector<int> find(std::string &index);
 
-	void insert(std::string index, int num);
-
-	std::vector<int> find(std::string index);
-
-	void del(std::string index, int key);
+	void del(std::string &index, int key);
 };

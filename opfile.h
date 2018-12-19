@@ -1,7 +1,7 @@
 #pragma once
 #include <fstream>
 
-bool exist(std::string name);
+bool exist(const std::string &name);
 
 void readInt(std::fstream &stream, int &t);
 

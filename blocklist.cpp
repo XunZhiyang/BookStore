@@ -27,7 +27,7 @@ BlockList::BlockList(std::string _name) : name(_name) {
 //	readInt(stream, pos);
 //}
 
-std::vector<int> BlockList::find(std::string index) {
+std::vector<int> BlockList::find(std::string &index) {
 	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	//std::cerr << file.tellg() << std::endl;
 	int blockNum;
@@ -84,7 +84,7 @@ std::vector<int> BlockList::find(std::string index) {
 	file.close();
 	return res;
 }
-void BlockList::del(std::string index, int key) {
+void BlockList::del(std::string &index, int key) {
 	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	//std::ofstream file(namee)
 	int blockNum;
@@ -139,7 +139,7 @@ void BlockList::del(std::string index, int key) {
 	file.close();
 }
 
-void BlockList::insert(std::string index, int key) {
+void BlockList::insert(std::string &index, int key) {
 	std::fstream file(name, std::ios::binary | std::ios::in | std::ios::out);
 	int blockNum;
 	readInt(file, blockNum);

@@ -6,7 +6,7 @@ namespace Book {  //The file saving data is "bookData"
 
 	int insert();
 
-	void modify(int, std::string c, std::string val);
+	void modify(int, std::string c, std::string &val);
 
 	std::string query(int, std::string);
 

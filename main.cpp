@@ -18,8 +18,13 @@ int main() {
 	}
 	char s[201];
 	s[200] = '\0';
+	int cntcnt = 0;
 	for (;;) {
 		std::cin.getline(s, 200);
+		if (!std::cin.good()) {
+			std::cin.clear();
+			std::cin.ignore(2147483644, '\n');
+		}
 		std::string str = s;
 		try {
 			int p = Bookstore.execute(str);
@@ -33,37 +38,3 @@ int main() {
 		}
 	}
 }
-//std::string randstring() {
-//	std::string S;
-//	for (int i = 1; i <= 4; ++i) {
-//		S += 'a' + rand() % 26;
-//	}
-//	return S;
-//}
-//int main() {
-//	BlockList test = BlockList("hahaha");
-//	for (int i = 1; i <= 1000; ++i) {
-//		std::string s = randstring();
-//		//std::cerr << s << std::endl;
-//		test.insert(randstring(), i);
-//		if(i % 1000 == 0)
-//			printf("%d\n", i);
-//	}
-//		std::cerr << "grsghslkgesrgklerhgliesghewlighesghlieghesrig" << std::endl;
-//
-//	for (int i = 1; i <= 3000; ++i) {
-//		auto c = test.find(randstring());
-//		for (int j = 0; j < c.size(); ++j) printf("%d\n", i);
-//	}
-//	//test.insert("aba", 578237);
-//	test.insert("aha", 155);
-//	test.insert("ffq", 156665);  
-//	test.insert("aca", 57482370);
-//	test.del("aha", 155);
-//	test.insert("qqiiyyy", 1550);
-//	test.insert("aha", 1565);
-//	test.del("qqiiyyy", 1550);
-//	test.insert("vfdbf", 34243240);
-//	printf("%d\n", test.find("aha")[0]);
-//	return 0;
-//}

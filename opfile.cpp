@@ -2,7 +2,7 @@
 #include <fstream>
 #include "opfile.h"
 
-bool exist(std::string name) {
+bool exist(const std::string &name) {
 	std::ifstream test(name);
 	if (test.good()) {
 		test.close();

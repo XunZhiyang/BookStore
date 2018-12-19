@@ -15,10 +15,10 @@
 //
 //}
 
-User::User(std::string _username, std::string _password, std::string _name, char _level) : 
-	username(_username), password(_password), name(_name), level(_level){}
+User::User(std::string &_username, std::string &_password, std::string &_name, char _level) :
+	username(_username), password(_password), name(_name), level(_level) {}
 
-User findUser(std::string s) {
+User findUser(std::string &s) {
 	std::fstream userData("userData", std::ios::in | std::ios::binary);
 	while (userData.peek() != EOF) {
 		std::string username, password, name;
@@ -36,7 +36,7 @@ User findUser(std::string s) {
 	throw(std::invalid_argument("Invalid"));
 }
 
-int count(std::string s) {
+int count(std::string &s) {
 	try {
 		findUser(s);
 	}
@@ -46,8 +46,9 @@ int count(std::string s) {
 	return 1;
 }
 
-int addUser(std::string username, std::string password, std::string name, char level) {
+int addUser(std::string &username, std::string &password, std::string &name, char level) {
 	if (count(username)) throw(std::invalid_argument("Invalid"));
+	if (level != 3 && level != 1 && level != 7) throw(std::invalid_argument("Invalid"));
 	std::fstream userData("userData", std::ios::binary | std::ios::out | std::ios::in);
 	userData.seekp(0, std::ios::end);
 	writeString(userData, username, 30);
@@ -58,7 +59,7 @@ int addUser(std::string username, std::string password, std::string name, char l
 	return 1;
 }
 
-void deleteUser(std::string s) {
+void deleteUser(std::string &s) {
 	std::fstream userData("userData", std::ios::in | std::ios::binary | std::ios::out);
 	while (userData.peek() != EOF) {
 		std::string username, password, name;
