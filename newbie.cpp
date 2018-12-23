@@ -56,17 +56,16 @@ int Newbie::operate() {
 	for (;;) {
 		std::cerr << "0 - exit   1 - display tutorial again   2 - access full version\n";
 		std::cerr << "Please enter a number:\n";
-		int ch;
-		std::cin >> ch;
-		getchar();
-		switch (ch) {
-		case(0):
+		std::string s;
+		std::getline(std::cin, s, '\n');
+		switch (s[0]) {
+		case('0'):
 			return 0;
 			break;
-		case(1):
+		case('1'):
 			displayTutorial();
 			break;
-		case(2):
+		case('2'):
 			return 1;
 			break;
 		default:

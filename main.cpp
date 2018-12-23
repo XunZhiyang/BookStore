@@ -19,19 +19,19 @@ int main() {
 		if (Bookstore.load("command.txt") == 0)  return 0;
 	}
 	std::cerr << "Do you know how to operate this system with command line?\n";
-	std::cerr << "0 - Yes, I am an expert.\n";
-	std::cerr << "1 - No, I am a newbie.\n";
+	std::cerr << "1 - Yes, I am an expert.\n";
+	std::cerr << "2 - No, I am a newbie.\n";
 	for (;;) {
 		int ch = 5;
-		std::cin >> ch;
-		getchar();
-		if (ch == 0) break;
-		if (ch == 1) {
+		std::string s;
+		std::getline(std::cin, s, '\n');
+		if (s[0] == '1') break;
+		if (s[0] == '2') {
 			int tmp = Newbie(Bookstore).operate();
 			if (tmp == 0) return 0;
 			else break;
 		}
-		std::cerr << "Please enter 0 or 1.\n";
+		std::cerr << "Please enter 1 or 2.\n";
 	}
 	char s[201];
 	s[200] = '\0';
