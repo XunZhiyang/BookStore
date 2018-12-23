@@ -156,6 +156,7 @@
     <ClInclude Include="blocklist.h" />
     <ClInclude Include="book.h" />
     <ClInclude Include="log.h" />
+    <ClInclude Include="newbie.h" />
     <ClInclude Include="opfile.h" />
     <ClInclude Include="store.h" />
     <ClInclude Include="user.h" />
@@ -165,6 +166,7 @@
     <ClCompile Include="book.cpp" />
     <ClCompile Include="log.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="newbie.cpp" />
     <ClCompile Include="opfile.cpp" />
     <ClCompile Include="store.cpp" />
     <ClCompile Include="user.cpp" />
