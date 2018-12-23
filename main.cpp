@@ -3,9 +3,9 @@
 #include <fstream>
 #include <string>
 #include <iostream>
-//#include "blocklist.h"
 #include "opfile.h"
 #include "store.h"
+#include "log.h"
 
 
 int main() {
@@ -26,15 +26,25 @@ int main() {
 			std::cin.ignore(2147483644, '\n');
 		}
 		std::string str = s;
+		bool flag = true;
 		try {
 			int p = Bookstore.execute(str);
 			if (p == 0) return 0;
 		}
 		catch (std::invalid_argument p) {
+			flag = false;
 			std::cout << p.what() << "\n";
 		}
 		catch (std::domain_error p) {
+			flag = false;
 			std::cout << p.what() << "\n";
+		}
+		if (flag) {
+			if(Bookstore.user.username != "")
+			    Log::record(Bookstore.user.username + "(" + Bookstore.user.name + ") : " + str);
+			else {
+				Log::record("guest : " + str);
+			}
 		}
 	}
 }

@@ -7,6 +7,7 @@
 #include "user.h"
 #include "book.h"
 #include "opfile.h"
+#include "log.h"
 #include "store.h"
 
 Store::Store() {
@@ -16,7 +17,9 @@ Store::Store() {
 		std::ofstream bookData("bookData");
 		bookData.close();
 		std::ofstream finance("finance");
-		finance.close();
+		finance.close();	
+		std::ofstream log("log");
+		log.close();
 		std::string root = "root", sjtu = "sjtu", BOSS = "BOSS";
 		addUser(root, sjtu, BOSS, 7);
 	}
@@ -365,6 +368,25 @@ int Store::execute(std::string &command) {
 	else if (t == "passwd") {
 		valid(1);
 		passwd(command, pos + 1);
+	}
+	else if (t == "report") {
+		int npos = command.find(" ", pos + 1);
+		std::string str = command.substr(pos + 1, npos - pos - 1);
+		pos = npos;
+		if (str == "myself") {
+			valid(3);
+			Log::query(user.username);
+		}
+		else if (str == "finance") {
+			valid(7);
+		}
+		else if (str == "employee") {
+			valid(7);
+			Log::queryall();
+		}
+		else {
+			throw std::invalid_argument("Invalid");
+		}
 	}
 	else if (t == "exit") {
 		return 0;
