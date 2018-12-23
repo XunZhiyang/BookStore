@@ -13,6 +13,9 @@ int main() {
 	std::cout.precision(2);
 	Store Bookstore;
 	std::cerr << "Welcome to the bookstore administration system!\n";
+	std::cerr << "           _____ __  __   ____   ____   ____  _  __ _____ _______ ____  _____  ______ \n     /\\   / ____|  \\/  | |  _ \\ / __ \\ / __ \\| |/ // ____|__   __/ __ \\|  __ \\|  ____|\n    /  \\ | |    | \\  / | | |_) | |  | | |  | | ' /| (___    | | | |  | | |__) | |__   \n   / /\\ \\| |    | |\\/| | |  _ <| |  | | |  | |  <  \\___ \\   | | | |  | |  _  /|  __|  \n  / ____ \\ |____| |  | | | |_) | |__| | |__| | . \\ ____) |  | | | |__| | | \\ \\| |____ \n /_/    \\_\\_____|_|  |_| |____/ \\____/ \\____/|_|\\_\\_____/   |_|  \\____/|_|  \\_\\______|\n";
+
+
 	if(exist("command.txt")){
 		if (Bookstore.load("command.txt") == 0)  return 0;
 	}
@@ -20,6 +23,9 @@ int main() {
 	s[200] = '\0';
 	int cntcnt = 0;
 	for (;;) {
+		if(Bookstore.user.username != "")
+			std::cerr << Bookstore.user.name << "@" << Bookstore.user.username << ":";
+		else std::cerr << "guest:";
 		std::cin.getline(s, 200);
 		if (!std::cin.good()) {
 			std::cin.clear();
@@ -27,8 +33,9 @@ int main() {
 		}
 		std::string str = s;
 		bool flag = true;
+		int p;
 		try {
-			int p = Bookstore.execute(str);
+			p = Bookstore.execute(str);
 			if (p == 0) return 0;
 		}
 		catch (std::invalid_argument p) {
@@ -40,11 +47,12 @@ int main() {
 			std::cout << p.what() << "\n";
 		}
 		if (flag) {
+			if (p == 2) Log::addFpos();
 			if(Bookstore.user.username != "")
-			    Log::record(Bookstore.user.username + "(" + Bookstore.user.name + ") : " + str);
-			else {
-				Log::record("guest : " + str);
-			}
+			    Log::record(Bookstore.user.username + "(" + Bookstore.user.name + "): " + str);
+			//else {
+			//	Log::record("guest : " + str);
+			//}
 		}
 	}
 }

@@ -12,11 +12,27 @@ namespace Log {
 
 	void queryall() {
 		std::fstream file("log", std::ios::binary | std::ios::in);
-		std::string tmp;
+		std::fstream fpos("fpos", std::ios::binary | std::ios::in);
+		std::fstream finance("finance", std::ios::binary | std::ios::in);
+		std::string string;
+		std::cout << std::showpos;
+		int _;
+		readInt(fpos, _);
 		while (file.peek() != EOF) {
-			readString(file, tmp, 300);
-			std::cout << tmp << "\n";
+			if (_ == file.tellg()) {
+				double c = readDouble(finance);
+				readString(file, string, 300);
+				std::cout << string << " " << c << "\n";
+				if(fpos.peek() != EOF) readInt(fpos, _);
+			}
+			else {
+				readString(file, string, 300);
+				std::cout << string << "\n";
+			}
 		}
+		std::cout << std::noshowpos;
+		finance.close();
+		fpos.close();
 		file.close();
 	}
 	void query(std::string username) {
@@ -31,7 +47,7 @@ namespace Log {
 					break;
 				}
 			}
-			if(flag) std::cout << tmp << "\n";
+			if (flag) std::cout << tmp << "\n";
 		}
 		file.close();
 	}
@@ -54,12 +70,30 @@ namespace Log {
 	}
 	void finance() {
 		std::fstream file("log", std::ios::binary | std::ios::in);
-		file.seekg(0, std::ios::end);
-		std::string tmp;
-		while (file.peek() != EOF) {
-			readString(file, tmp, 300);
-			std::cout << tmp << "\n";
+		std::fstream fpos("fpos", std::ios::binary | std::ios::in);
+		std::fstream finance("finance", std::ios::binary | std::ios::in);
+		std::string string;
+		std::cout << std::showpos;
+		while (fpos.peek() != EOF) {
+			double c = readDouble(finance);
+			int _;
+			readInt(fpos, _);
+			file.seekg(_);
+			readString(file, string, 300);
+			std::cout << string << " " << c << "\n";
 		}
+		std::cout << std::noshowpos;
+		finance.close();
+		fpos.close();
+		file.close();
+	}
+	void addFpos() {
+		std::fstream file("log", std::ios::binary | std::ios::in | std::ios::out);
+		file.seekp(0, std::ios::end);
+		int u = file.tellp();
+		file.close();
+		file.open("fpos", std::ios::binary | std::ios::in | std::ios::out | std::ios::ate);
+		writeInt(file, u);
 		file.close();
 	}
 }

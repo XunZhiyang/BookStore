@@ -17,9 +17,11 @@ Store::Store() {
 		std::ofstream bookData("bookData");
 		bookData.close();
 		std::ofstream finance("finance");
-		finance.close();	
+		finance.close();
 		std::ofstream log("log");
 		log.close();
+		std::ofstream fpos("fpos");
+		fpos.close();
 		std::string root = "root", sjtu = "sjtu", BOSS = "BOSS";
 		addUser(root, sjtu, BOSS, 7);
 	}
@@ -224,9 +226,10 @@ void Store::su(std::string &command, int pos) {
 	std::string username = command.substr(pos, npos - pos);
 	pos = npos + 1;
 	npos = command.find(" ", pos);
-	std::string password = command.substr(pos, npos - pos);
+	std::string password;
+	if (npos > pos) password = command.substr(pos, npos - pos);
 	auto &&nuser = findUser(username);
-	if (password == nuser.password) {
+	if (user.level > nuser.level || password == nuser.password) {
 		user = nuser;
 		std::cerr << "Hello, " << user.name << "\n";
 	}
@@ -323,6 +326,7 @@ int Store::execute(std::string &command) {
 		valid(3);
 		if (select == -1) throw(std::invalid_argument("Invalid"));
 		import(command, pos + 1);
+		return 2;
 	}
 	else if (t == "show") {
 		int npos = command.find(" ", pos + 1);
@@ -344,6 +348,7 @@ int Store::execute(std::string &command) {
 	else if (t == "buy") {
 		valid(1);
 		buy(command, pos + 1);
+		return 2;
 	}
 	else if (t == "su") {
 		su(command, pos + 1);
@@ -379,10 +384,11 @@ int Store::execute(std::string &command) {
 		}
 		else if (str == "finance") {
 			valid(7);
+			Log::finance();
 		}
 		else if (str == "employee") {
 			valid(7);
-			Log::queryall();
+			Log::queryEmployee();
 		}
 		else {
 			throw std::invalid_argument("Invalid");
@@ -390,6 +396,10 @@ int Store::execute(std::string &command) {
 	}
 	else if (t == "exit") {
 		return 0;
+	}
+	else if (t == "log") {
+		valid(7);
+		Log::queryall();
 	}
 	else throw(std::invalid_argument("Invalid"));
 	return 1;

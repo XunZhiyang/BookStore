@@ -6,4 +6,10 @@ namespace Log {
 	void queryall();
 
 	void query(std::string username);
+
+	void queryEmployee();
+
+	void finance();
+
+	void addFpos();
 }
