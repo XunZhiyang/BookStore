@@ -66,9 +66,6 @@ int main() {
 			if (p == 2) Log::addFpos();
 			if (Bookstore.user.username != "")
 				Log::record(Bookstore.user.username + "(" + Bookstore.user.name + "): " + str);
-			//else {
-			//	Log::record("guest : " + str);
-			//}
 		}
 	}
 }
