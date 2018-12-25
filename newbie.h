@@ -3,9 +3,12 @@
 class Newbie {
 private:
 	Store *store;
-	static void peppa();
-	void displayTutorial();
+	void help();
 public:
+	static void peppa();
+	static void displayTutorial();
 	Newbie(Store &);
+	void hitMoney();
 	int operate();
+	int friendly_operate();
 };

@@ -431,3 +431,26 @@ int Store::load(std::string fileName) {
 	loadFile.close();
 	return 1;
 }
+
+int Store::mainExecute(std::string & str) {
+	bool flag = true;
+	int p;
+	try {
+		p = execute(str);
+		if (p == 0) return 0;
+	}
+	catch (std::invalid_argument p) {
+		flag = false;
+		std::cout << p.what() << "\n";
+	}
+	catch (std::domain_error p) {
+		flag = false;
+		std::cout << p.what() << "\n";
+	}
+	if (flag) {
+		if (p == 2) Log::addFpos();
+		if (user.username != "")
+			Log::record(user.username + "(" + user.name + "): " + str);
+	}
+	return 1;
+}

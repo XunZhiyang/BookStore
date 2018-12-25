@@ -18,6 +18,8 @@ public:
 
 	int execute(std::string &);
 
+	int mainExecute(std::string &);
+
 	void valid(int level);
 
 	void modify(std::string &command, int pos);

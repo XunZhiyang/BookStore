@@ -6,7 +6,6 @@
 #include "log.h"
 #include "newbie.h"
 
-
 int main() {
 	std::cout.setf(std::ios::fixed);
 	std::cout.precision(2);
@@ -27,7 +26,7 @@ int main() {
 		std::getline(std::cin, s, '\n');
 		if (s[0] == '1') break;
 		if (s[0] == '2') {
-			int tmp = Newbie(Bookstore).operate();
+			int tmp = Newbie(Bookstore).friendly_operate();
 			if (tmp == 0) return 0;
 			else break;
 		}
@@ -46,24 +45,8 @@ int main() {
 			std::cin.ignore(2147483644, '\n');
 		}
 		std::string str = s;
-		bool flag = true;
-		int p;
-		try {
-			p = Bookstore.execute(str);
-			if (p == 0) return 0;
-		}
-		catch (std::invalid_argument p) {
-			flag = false;
-			std::cout << p.what() << "\n";
-		}
-		catch (std::domain_error p) {
-			flag = false;
-			std::cout << p.what() << "\n";
-		}
-		if (flag) {
-			if (p == 2) Log::addFpos();
-			if (Bookstore.user.username != "")
-				Log::record(Bookstore.user.username + "(" + Bookstore.user.name + "): " + str);
-		}
+		if (str == "help") Newbie::displayTutorial();
+		else if (str == "peppa") Newbie::peppa();
+		else if (Bookstore.mainExecute(str) == 0) return 0;
 	}
 }

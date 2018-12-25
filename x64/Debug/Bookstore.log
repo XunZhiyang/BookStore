@@ -1,2 +1,36 @@
-﻿  newbie.cpp
+﻿  store.cpp
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(51): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(54): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(57): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(64): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(73): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(82): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(89): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(97): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(106): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(131): warning C4244: “初始化”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(132): warning C4307: “*”: 整型常量溢出
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(133): warning C4244: “=”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(135): warning C4244: “=”: 从“std::streamoff”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(141): warning C4307: “*”: 整型常量溢出
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(169): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(172): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(175): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(182): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(202): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(225): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(228): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(240): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(243): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(249): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(257): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(261): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(265): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(272): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(278): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(281): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(292): warning C4267: “=”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(307): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(332): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
+e:\study\programming\bookstore\bookstore\bookstore\store.cpp(378): warning C4267: “初始化”: 从“size_t”转换到“int”，可能丢失数据
   Bookstore.vcxproj -> E:\study\programming\Bookstore\Bookstore\x64\Debug\Bookstore.exe
